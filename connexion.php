@@ -42,6 +42,7 @@
 
 <?php
 
+include('fonction.php');
 //connexion db
 $bdd=new PDO('mysql:host=localhost;dbname=phplogin','root','');
 
@@ -73,19 +74,21 @@ if(!empty($_POST['login']) AND !empty($_POST['password']))
 			$_SESSION['login'] = $loginconnect;
 		
 			//si ut est admin
-			if($_SESSION['statut'] == "admin")
+			if($resultat['ut_statut'] == "admin")
 			
 			{
-				echo "ok"; //vérif
-				//à compléter redirection vers page accueil pour admin
+				//echo "ok"; //vérif
+				//à compléter redirection vers page accueil pour admin (test)
+				redirect('mdpoublie.php'); 
 
 			}
 			//si ut est joueur			
 			else
 			{
-				echo "okk"; //vérif
-				//à compléter redirection vers page accueil pour joueur
-	
+				//echo "okk"; //vérif
+				//à compléter redirection vers page accueil pour joueur (test)
+				redirect('mdpoublie.php');
+				
 			}
 		
 		}

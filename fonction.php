@@ -1,5 +1,16 @@
 <?php
 
+
+
+function redirect($url) 
+
+{
+    header("Location: $url");
+}
+
+
+
+
 function motDePasse($longueur) 
 
 { // par défaut, on affiche un mot de passe de 5 caractères
