@@ -40,51 +40,53 @@
 	  
 <body>
 
+
 <?php
 
     session_start();
 	$bdd=new PDO('mysql:host=localhost;dbname=phplogin','root','');
-    include('fonction.php');
+	
+	
+include('fonction.php');
 
 
-        if (!empty($_POST['login']) AND !empty($_POST['nvpassword']) AND !empty($_POST['repeatnvpassword']))
-		{
-			
-			
+if (!empty($_POST['login']) AND !empty($_POST['nvpassword']) AND !empty($_POST['repeatnvpassword']))
+
+{	
 		$login = trim($_POST['login']);
 		$nvpassword = trim($_POST['nvpassword']);
 		$repeatnvpassword = trim($_POST['repeatnvpassword']);
 		
-		$requete = $bdd->prepare('select * from utilisateur where ut_login =?');	
+		$requete = $bdd->prepare('select * from utilisateur where ut_login=?'); 	
 		$requete->execute(array($login));
 		$requete = $requete->fetch();
 
-
-		if($login == $requete['ut_login'])
+		if($nvpassword == $repeatnvpassword)
 		{
-			if($nvpassword == $repeatnvpassword)
-			{
-				//a faire fonctionner
-				 $resultat=$bdd->prepare("UPDATE utilisateur SET ut_mdp = ? WHERE ut_login =? "); 
-                 $resultat->execute(array($nvpassword, $requete['ut_mdp']));
-								
-			}
-			else
-			{
-				$erreur = "Les mots de passe ne correspondent pas !";
-								
-			}	
+			if($login == $requete['ut_login'])
+				{
+					
+					 $resultat=$bdd->prepare("UPDATE utilisateur SET ut_mdp = ? WHERE ut_login =?"); 
+					 $resultat->execute(array($nvpassword, $requete['ut_login']));
+					 $erreur = "Votre mot de passe a bien été changé !";
+					 redirect('connexion.php');
+									
+				}
+				else
+				{
+					$erreur = "Login introuvable !";
+									
+				}	
 			
 		}
 		else
 		
 		{
-			$erreur = "Login introuvable !";
+			$erreur = "Les mots de passe ne correspondent pas !";
 		}
 		
-		//existence login dba_close
 		
-		}
+}
             
 	
 ?>
